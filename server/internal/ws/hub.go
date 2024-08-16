@@ -2,7 +2,6 @@ package ws
 
 import (
 	"fmt"
-	"log"
 )
 
 type Room struct {
@@ -33,7 +32,6 @@ func (hub *Hub) Run() {
 		case client := <-hub.Register:
 			if _, ok := hub.Rooms[client.RoomID]; ok {
 				r := hub.Rooms[client.RoomID]
-				log.Printf("r: %s c: %s\n", r.Password, client.Password)
 				if r.Password == client.Password {
 					if _, ok := r.Clients[client.ID]; !ok {
 						r.Clients[client.ID] = client

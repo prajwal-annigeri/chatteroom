@@ -5,9 +5,9 @@ postgres:
 	docker exec -it postgres15 psql
 
 migrateup:
-	migrate -path db/migrations -database "postgresql://{user}:{password}@{url}/go-chat?sslmode=disable" -verbose up
+	migrate -path db/migrations -database "postgresql://root:password@localhost:5434/go-chat?sslmode=disable" -verbose up
 
 migrate_down:
-	migrate -path db/migrations -database "postgresql://{user}:{password}@{url}/go-chat?sslmode=disable" -verbose down
+	migrate -path db/migrations -database "postgresql://root:password@localhost:5434/go-chat?sslmode=disable" -verbose down
 
 .PHONY: postgres_init postgres migrateup migratedown

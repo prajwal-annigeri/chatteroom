@@ -86,8 +86,8 @@ func (h *Handler) JoinRoom(c *gin.Context) {
 		Username: client.Username,
 	}
 	
-	h.hub.Register <- client
 	h.hub.Broadcast <- m
+	h.hub.Register <- client
 
 	go client.writeMessage()
 	client.readMessage(h.hub)
