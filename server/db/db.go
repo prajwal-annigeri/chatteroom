@@ -10,8 +10,8 @@ type Database struct {
 	db *sql.DB
 }
 
-func NewDatabase() (*Database, error) {
-	db, err := sql.Open("postgres", "postgresql://root:password@localhost:5434/go-chat?sslmode=disable")
+func NewDatabase(dsn string) (*Database, error) {
+	db, err := sql.Open("postgres", dsn)
 	if err != nil {
 		return nil, err
 	}

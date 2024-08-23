@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"log"
 	"os"
 	"server/db"
@@ -9,14 +10,27 @@ import (
 	"server/router"
 )
 
-func main() {
-	dbConn, err := db.NewDatabase()
-	if err != nil {
-		log.Fatalf("Couldn't connect to DB: %s", err)
+
+var connString = flag.String("conn-string", "", "Postgres connection string")
+
+func parseFlags() {
+	flag.Parse()
+
+	if *connString == "" {
+		log.Fatalf("Need conn-string")
 	}
+}
+
+func main() {
+	parseFlags()
 
 	if os.Getenv("secretkey") == "" {
-		log.Fatalf("No secretkey environment variable")
+		log.Fatalf("Need secretkey environment variable")
+	}
+
+	dbConn, err := db.NewDatabase(*connString)
+	if err != nil {
+		log.Fatalf("Couldn't connect to DB: %s", err)
 	}
 
 	userRepository := user.NewRepository(dbConn.GetDB())
